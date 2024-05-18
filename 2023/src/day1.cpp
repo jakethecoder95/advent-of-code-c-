@@ -1,8 +1,5 @@
 #include <cctype>
 #include <fstream>
-#include <map>
-#include <iostream>
-#include <ctype.h>
 #include <string>
 #include <unordered_map>
 
