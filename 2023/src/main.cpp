@@ -6,13 +6,13 @@
 #include "day4.h"
 
 int main() {
-    std::cout << day1Part1() << "\n";
-    std::cout << day1Part2() << "\n";
-    std::cout << day2Part1() << "\n";
-    std::cout << day2Part2() << "\n";
-    std::cout << day3Part1() << "\n";
-    std::cout << day3Part2() << "\n";
-    std::cout << day4Part1() << "\n";
-    std::cout << day4Part2() << "\n";
+    std::cout << "1a: " << day1Part1() << "\n";
+    std::cout << "1b: " << day1Part2() << "\n";
+    std::cout << "2a: " << day2Part1() << "\n";
+    std::cout << "2b: "<< day2Part2() << "\n";
+    std::cout << "3a: " << day3Part1() << "\n";
+    std::cout << "3b: " << day3Part2() << "\n";
+    std::cout << "4a: " << day4Part1() << "\n";
+    std::cout << "4b: " << day4Part2() << "\n";
   return 0;
 }
