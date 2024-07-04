@@ -142,7 +142,7 @@ void getSeedsAndMappingsFromFile(
     std::vector<std::vector<Map>> &mapping_collections) {
 
   std::string line{};
-  std::ifstream file{"./data/day5-example.txt"};
+  std::ifstream file{"./data/day5.txt"};
 
   while (std::getline(file, line)) {
 
