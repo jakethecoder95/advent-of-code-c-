@@ -1,4 +1,5 @@
 #include "day5.h"
+#include "./utils/utils.h"
 
 #include <climits>
 #include <cstddef>
@@ -21,25 +22,6 @@ const bool SHOULD_LOG = false;
 const std::unordered_map<size_t, std::string> INDEX_NAME_MAP{
     {0, "Soil"},        {1, "Fertilizer"}, {2, "Water"},   {3, "Light"},
     {4, "Temperature"}, {5, "Humidity"},   {6, "Location"}};
-
-std::vector<long> extractNumbersFrom(std::string val) {
-
-  std::vector<long> numbers{};
-
-  std::string num{};
-  for (size_t i{0}; i < val.length(); i++) {
-    char c = val.at(i);
-    if (c != ' ') {
-      num.push_back(c);
-    }
-    if (c == ' ' || i == val.length() - 1) {
-      numbers.push_back(std::stol(num));
-      num.clear();
-    }
-  }
-
-  return numbers;
-}
 
 void logRange(std::string prefix, Map range) {
   if (SHOULD_LOG) {
@@ -151,7 +133,7 @@ void getSeedsAndMappingsFromFile(
     // Get the seeds out of the first line.
     if (line.substr(0, 5) == "seeds") {
       std::string seedstr = line.substr(7, 8 - line.length());
-      seeds = extractNumbersFrom(seedstr);
+      seeds = extractLongsFrom(seedstr);
       continue;
     }
 
@@ -162,7 +144,7 @@ void getSeedsAndMappingsFromFile(
     }
 
     // Handle mapping line.
-    std::vector<long> lineValues = extractNumbersFrom(line);
+    std::vector<long> lineValues = extractLongsFrom(line);
 
     Map map{};
     map.destLow = lineValues.at(0);
