@@ -6,7 +6,6 @@
 #include <iostream>
 #include <string>
 #include <unordered_map>
-#include <utility>
 #include <vector>
 
 struct Map {
@@ -16,6 +15,8 @@ struct Map {
   long sourceHigh;
   long range;
 };
+
+const bool SHOULD_LOG = false;
 
 const std::unordered_map<size_t, std::string> INDEX_NAME_MAP{
     {0, "Soil"},        {1, "Fertilizer"}, {2, "Water"},   {3, "Light"},
@@ -41,8 +42,10 @@ std::vector<long> extractNumbersFrom(std::string val) {
 }
 
 void logRange(std::string prefix, Map range) {
-  std::cout << prefix << range.sourceLow << "-" << range.sourceHigh << " to "
-            << range.destLow << "-" << range.destHigh << '\n';
+  if (SHOULD_LOG) {
+    std::cout << prefix << range.sourceLow << "-" << range.sourceHigh << " to "
+              << range.destLow << "-" << range.destHigh << '\n';
+  }
 }
 
 void addOrReplaceMap(Map newRange, std::vector<Map> &ranges, bool useDest) {
@@ -85,11 +88,11 @@ std::vector<Map> performMapping(std::vector<Map> ranges,
     std::vector collection = collections.at(collectionIndex);
     for (Map map : collection) {
 
-      logRange("Current Map: " , map);
+      logRange("Current Map: ", map);
 
       // Handle out of range.
       if (range.destHigh < map.sourceLow || range.destLow > map.sourceHigh) {
-        logRange("Out of Range: " , map);
+        logRange("Out of Range: ", map);
         addOrReplaceMap(range, newRanges, true);
         continue;
       }
@@ -101,7 +104,7 @@ std::vector<Map> performMapping(std::vector<Map> ranges,
         overlapMap.destLow = range.destLow;
         overlapMap.destHigh = map.sourceLow - 1;
         newRanges.push_back(overlapMap);
-        logRange("Partial Out of Range Low: " , overlapMap);
+        logRange("Partial Out of Range Low: ", overlapMap);
         range.destLow = map.sourceLow;
       }
       if (range.destHigh > map.sourceHigh &&
@@ -111,7 +114,7 @@ std::vector<Map> performMapping(std::vector<Map> ranges,
         overlapMap.destLow = map.sourceHigh + 1;
         overlapMap.destHigh = range.destHigh;
         newRanges.push_back(overlapMap);
-        logRange("Partial Out of Range High: " , overlapMap);
+        logRange("Partial Out of Range High: ", overlapMap);
         range.destHigh = map.sourceHigh;
       }
 
@@ -126,12 +129,6 @@ std::vector<Map> performMapping(std::vector<Map> ranges,
       logRange("In Range: ", inRangeMap);
       break;
     }
-
-    std::cout << "Map Values: ";
-    for (Map map : newRanges) {
-      std::cout << map.destLow << "-" << map.destHigh << ", ";
-    }
-    std::cout << "\n";
   }
 
   return performMapping(newRanges, collections, collectionIndex + 1);
@@ -230,11 +227,9 @@ long day5Part2() {
 
   long closest_location = LONG_MAX;
   for (Map range : resultRanges) {
-    std::cout << range.destLow << ' ';
     closest_location =
         range.destLow < closest_location ? range.destLow : closest_location;
   }
-  std::cout << '\n';
 
   return closest_location;
 }
